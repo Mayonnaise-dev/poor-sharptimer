@@ -180,7 +180,7 @@ namespace SharpTimer
 
             string arg = command.ArgByIndex(1);
             string arg2 = command.ArgByIndex(2);
-            
+
             _ = Task.Run(async () => await ReplayHandler(player, slot, arg, "69", "unknown", Int16.Parse(arg2), playerTimers[slot].currentStyle, true, playerTimers[slot].Mode));
         }
 
@@ -305,15 +305,16 @@ namespace SharpTimer
                 if (wr)
                 {
                     var sortedRecords = await GetSortedRecordsFromGlobal(GetNamedStyle(style), mode, bonusX, 10);
-                    wrID = sortedRecords[top10-1].record_id;
-                    wrPlayerName = sortedRecords[top10-1].player_name;
-                    wrTime = Utils.FormatDecimalTime(sortedRecords[top10-1].time);
+                    wrID = sortedRecords[top10 - 1].record_id;
+                    wrPlayerName = sortedRecords[top10 - 1].player_name;
+                    wrTime = Utils.FormatDecimalTime(sortedRecords[top10 - 1].time);
                 }
             }
 
             if ((srSteamID == "null" || srPlayerName == "null" || srTime == 0) && !self)
             {
-                Server.NextFrame(() => {
+                Server.NextFrame(() =>
+                {
                     Utils.PrintToChat(player, Localizer["no_sr_replay"]);
                     RespawnPlayer(player);
                 });
@@ -329,7 +330,7 @@ namespace SharpTimer
                 else
                     await ReadReplayFromJson(player, !self ? srSteamID : pbSteamID, slot, bonusX, style, mode);
             }
-            
+
             if (playerReplays[slot].replayFrames.Count == 0) return;
 
             //if (!wr) await GetReplayVIPGif(!self ? srSteamID : pbSteamID, slot);
@@ -390,7 +391,7 @@ namespace SharpTimer
                 playerTimers[slot].IsReplaying = false;
 
                 if (player.PlayerPawn.Value!.MoveType != MoveType_t.MOVETYPE_WALK || player.PlayerPawn.Value.ActualMoveType != MoveType_t.MOVETYPE_WALK) SetMoveType(player, MoveType_t.MOVETYPE_WALK);
-                    playerReplays.Remove(slot);
+                playerReplays.Remove(slot);
 
                 playerReplays[slot] = new PlayerReplays();
                 playerTimers[slot].IsTimerBlocked = false;
@@ -632,7 +633,7 @@ namespace SharpTimer
             if (CommandCooldown(player))
                 return;
 
-            _ = Task.Run(async () => await PrintTop10PlayerPoints(player));
+            _ = Task.Run(async () => await PrintTop10PlayerPointsFlat(player));
         }
 
         [ConsoleCommand("css_wr", "Prints world record for current map")]
@@ -656,7 +657,7 @@ namespace SharpTimer
         {
             if (!IsPlayerOrSpectator(player))
                 return;
-            
+
             if (apiKey == "")
                 return;
 
@@ -674,7 +675,7 @@ namespace SharpTimer
         {
             if (!IsPlayerOrSpectator(player))
                 return;
-            
+
             if (apiKey == "")
                 return;
 
@@ -723,7 +724,7 @@ namespace SharpTimer
                 currentMapNamee = mapName;
 
             var sortedRecords = await GetSortedRecordsFromDatabase(10, bonusX, currentMapNamee, style, mode);
-            
+
             Server.NextFrame(() =>
             {
                 if (!IsPlayerOrSpectator(player))
@@ -864,7 +865,7 @@ namespace SharpTimer
 
                         if (pbTicks != 0)
                             Utils.PrintToChat(player!, Localizer["current_pb", currentMapName!, Utils.FormatTime(pbTicks), mapPlacement]);
-                        
+
                         if (playerTimers[slot].CachedBonusInfo.Any())
                         {
                             foreach (var bonusPb in playerTimers[slot].CachedBonusInfo.OrderBy(x => x.Key))
@@ -902,7 +903,7 @@ namespace SharpTimer
                 return;
 
             Utils.LogDebug($"Handling !sr for {_playerName}...");
-            
+
             var sortedRecords = await GetSortedRecordsFromDatabase();
 
             if (sortedRecords.Count == 0)
@@ -1163,7 +1164,7 @@ namespace SharpTimer
 
             Utils.LogDebug($"{playerName} calling css_r...");
 
-            if (CommandCooldown(player)) 
+            if (CommandCooldown(player))
                 return;
 
             if (playerTimers[slot].IsReplaying)
@@ -1172,7 +1173,7 @@ namespace SharpTimer
                 playerTimers[slot].IsReplaying = false;
 
                 if (player.PlayerPawn.Value!.MoveType != MoveType_t.MOVETYPE_WALK || player.PlayerPawn.Value.ActualMoveType == MoveType_t.MOVETYPE_WALK) SetMoveType(player, MoveType_t.MOVETYPE_WALK);
-                    playerReplays.Remove(slot);
+                playerReplays.Remove(slot);
 
                 playerReplays[slot] = new PlayerReplays();
                 playerTimers[slot].IsTimerBlocked = false;
@@ -1433,7 +1434,7 @@ namespace SharpTimer
                 return;
             }
 
-            var rankList = string.Join($"{ChatColors.White}, ", 
+            var rankList = string.Join($"{ChatColors.White}, ",
                 rankDataList
                     .Where(rank => rank.Title != UnrankedTitle)
                     .OrderByDescending(rank => rank.Percent)
@@ -1522,7 +1523,8 @@ namespace SharpTimer
 
             if (stageTriggerCount == 0)
             {
-                if (enableRsOnLinear) {
+                if (enableRsOnLinear)
+                {
                     player.ExecuteClientCommandFromServer("css_r");
                     return;
                 }
@@ -1664,9 +1666,9 @@ namespace SharpTimer
             bool hidingPlayers = !playerTimers[slot].HidePlayers;
 
             playerTimers[slot].HidePlayers = hidingPlayers;
-            
+
             _ = Task.Run(async () => await SetPlayerStats(player, steamID, playerName, slot));
-            
+
             if (hidingPlayers)
                 Utils.PrintToChat(player, $"Hide: {ChatColors.Green}Enabled");
             else
@@ -1806,7 +1808,7 @@ namespace SharpTimer
 
             if (!CanCheckpoint(player))
                 return;
-            
+
             if (playerTimers[slot].currentStyle == 12)
                 playerTimers[slot].PrevTimerTicks.Add(playerTimers[slot].TimerTicks);
 
@@ -1869,8 +1871,8 @@ namespace SharpTimer
 
             if (!CanCheckpoint(player))
                 return;
-            
-            if(playerTimers[slot].currentStyle == 12)
+
+            if (playerTimers[slot].currentStyle == 12)
                 playerTimers[slot].TimerTicks = playerTimers[slot].PrevTimerTicks[playerTimers[slot].CheckpointIndex];
 
             // Check if the player has any checkpoints
@@ -1942,11 +1944,11 @@ namespace SharpTimer
                 index = (index - 1 + checkpoints.Count) % checkpoints.Count;
 
                 PlayerCheckpoint previousCheckpoint = checkpoints[index];
-                
+
 
                 // Update the player's checkpoint index and timer ticks
                 playerTimers[slot].CheckpointIndex = index;
-                if(playerTimers[slot].currentStyle == 12)
+                if (playerTimers[slot].currentStyle == 12)
                     playerTimers[slot].TimerTicks = playerTimers[slot].PrevTimerTicks[playerTimers[slot].CheckpointIndex];
 
                 // Convert position and rotation strings to Vector_t and QAngle_t
@@ -2004,7 +2006,7 @@ namespace SharpTimer
 
                 // Update the player's checkpoint index and timer ticks
                 playerTimers[slot].CheckpointIndex = index;
-                if(playerTimers[slot].currentStyle == 12)
+                if (playerTimers[slot].currentStyle == 12)
                     playerTimers[slot].TimerTicks = playerTimers[slot].PrevTimerTicks[playerTimers[slot].CheckpointIndex];
 
                 // Convert position and rotation strings to Vector_t and QAngle_t

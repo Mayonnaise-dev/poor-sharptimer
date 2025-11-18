@@ -939,12 +939,12 @@ namespace SharpTimer
 
                             var prevSRData = await GetMapRecordSteamIDFromDatabase(bonusX, 0, style, mode);
                             int prevSRTimerTicks = prevSRData.Item3;
-                            
+
                             await upsertCommand!.ExecuteNonQueryAsync();
                             Server.NextFrame(() =>
                                 Utils.LogDebug(
                                     $"Saved player {(bonusX != 0 ? $"bonus {bonusX} time" : "time")} to database for {playerName} {timerTicks} {DateTimeOffset.UtcNow.ToUnixTimeSeconds()}"));
-                            
+
                             if (IsAllowedPlayer(player))
                             {
                                 Server.NextFrame(() => _ = Task.Run(async () => await PrintMapTimeToChat(player!,
@@ -958,7 +958,7 @@ namespace SharpTimer
                                 var (oldPts, newPts) = await SavePlayerPoints(steamId, playerName, slot, timerTicks, dBtimerTicks, mode,
                                     beatPB,
                                     bonusX, style, dBtimesFinished);
-                                
+
                                 Server.NextFrame(() => Utils.PrintToChat(player, Localizer["gained_points",
                                     playerName, Convert.ToInt32(newPts - oldPts),
                                     newPts]));
@@ -986,38 +986,38 @@ namespace SharpTimer
                                             _ = Task.Run(async () => await DumpReplayToJson(player!, steamId, slot, bonusX, playerTimers[slot].currentStyle, playerTimers[slot].Mode));
                                     }
                                 }
-                                
+
                             }
 
                             Server.NextFrame(async () =>
                             {
-                                 if (globalDisabled)
-                                    return;
-                                 
-                                 DateTimeOffset timeCreated = DateTimeOffset.UtcNow;
-                                 int playerId = playerCache.PlayerID[slot];
-
-                                 if (playerTimers[slot].Mode == "Custom")
+                                if (globalDisabled)
                                     return;
 
-                                 //first lets see if the new record beats global pb
-                                 var beatGlobalPB = false;
-                                 var prevPBTime = await GetPreviousPlayerRecordFromGlobal(playerId, playerTimers[slot].Mode,
-                                    GetNamedStyle(style), bonusX);
-                                 if (prevPBTime > Utils.TicksToDecimal(timerTicks) || prevPBTime == 0)
+                                DateTimeOffset timeCreated = DateTimeOffset.UtcNow;
+                                int playerId = playerCache.PlayerID[slot];
+
+                                if (playerTimers[slot].Mode == "Custom")
+                                    return;
+
+                                //first lets see if the new record beats global pb
+                                var beatGlobalPB = false;
+                                var prevPBTime = await GetPreviousPlayerRecordFromGlobal(playerId, playerTimers[slot].Mode,
+                                   GetNamedStyle(style), bonusX);
+                                if (prevPBTime > Utils.TicksToDecimal(timerTicks) || prevPBTime == 0)
                                     beatGlobalPB = true;
 
-                                 var record_payload = new GlobalRecord
-                                 {
-                                     player_id = playerId,
-                                     server_id = serverCache.ServerID,
-                                     map_id = mapCache.MapID,
-                                     bonus = bonusX,
-                                     mode = playerTimers[slot].Mode,
-                                     style = GetNamedStyle(style),
-                                     time = Utils.TicksToDecimal(timerTicks),
-                                     created_on = timeCreated
-                                 };
+                                var record_payload = new GlobalRecord
+                                {
+                                    player_id = playerId,
+                                    server_id = serverCache.ServerID,
+                                    map_id = mapCache.MapID,
+                                    bonus = bonusX,
+                                    mode = playerTimers[slot].Mode,
+                                    style = GetNamedStyle(style),
+                                    time = Utils.TicksToDecimal(timerTicks),
+                                    created_on = timeCreated
+                                };
 
                                 _ = Task.Run(async () =>
                                 {
@@ -1083,10 +1083,10 @@ namespace SharpTimer
                             upsertCommand!.AddParameterWithValue("@SteamID", steamId);
                             upsertCommand!.AddParameterWithValue("@Style", style);
                             upsertCommand!.AddParameterWithValue("@Mode", mode);
-                            
+
                             var prevSRData = await GetMapRecordSteamIDFromDatabase(bonusX, 0, style, mode);
                             int prevSRTimerTicks = prevSRData.Item3;
-                            
+
                             await upsertCommand!.ExecuteNonQueryAsync();
 
                             if (globalRanksEnabled)
@@ -1094,12 +1094,12 @@ namespace SharpTimer
                                 var (oldPts, newPts) = await SavePlayerPoints(steamId, playerName, slot, timerTicks, dBtimerTicks, mode,
                                     beatPB,
                                     bonusX, style, dBtimesFinished);
-                                
+
                                 Server.NextFrame(() => Utils.PrintToChat(player, Localizer["gained_points",
                                     playerName, Convert.ToInt32(newPts - oldPts),
                                     newPts]));
                             }
-                            
+
                             Server.NextFrame(() =>
                                 Utils.LogDebug(
                                     $"Saved player {(bonusX != 0 ? $"bonus {bonusX} time" : "time")} to database for {playerName} {timerTicks} {DateTimeOffset.UtcNow.ToUnixTimeSeconds()}"));
@@ -1133,7 +1133,7 @@ namespace SharpTimer
                                             _ = Task.Run(async () => await DumpReplayToJson(player!, steamId, slot, bonusX, playerTimers[slot].currentStyle, playerTimers[slot].Mode));
                                     }
                                 }
-                                
+
                             }
 
                             Server.NextFrame(async () =>
@@ -1301,7 +1301,7 @@ namespace SharpTimer
                             {
                                 if (string.IsNullOrEmpty(mode))
                                     mode = GetModeName(defaultMode);
-                                
+
                                 if (playerTimers.TryGetValue(slot, out PlayerTimerInfo? value))
                                 {
                                     value.HideTimerHud = hideTimerHud;
@@ -2015,7 +2015,7 @@ namespace SharpTimer
                         if (row.Read())
                         {
                             playerPoints = row.GetInt32("GlobalPoints");
-                            
+
                             int newPoints = await CalculatePlayerPoints(steamId, playerName, timerTicks, oldTicks, mode,
                                 beatPB, bonusX, style, completions, mapname) + playerPoints;
 
@@ -2055,7 +2055,7 @@ namespace SharpTimer
                                     upsertCommand!.AddParameterWithValue("@GlobalPoints", newPoints);
 
                                     await upsertCommand!.ExecuteNonQueryAsync();
-                                    
+
                                     Server.NextFrame(() =>
                                         Utils.LogDebug(
                                             $"Set points in database for {playerName} from {playerPoints} to {newPoints}"));
@@ -2080,6 +2080,129 @@ namespace SharpTimer
                     Utils.LogError($"Error getting player stats from database for {playerName}: {ex}"));
             }
             return (0, 0);
+        }
+
+        private class MapRecord
+        {
+            public required string MapName { get; set; }
+            public required string SteamID { get; set; }
+            public int Rank { get; set; }
+        }
+
+        public async Task<int> CalculatePlayerPointsDynamic(string steamId, string playerName,
+                string mode, int bonusX = 0, int style = 0)
+        {
+            Utils.LogDebug($"Trying to calculate dynamic player points for {playerName} (SteamID: {steamId})");
+            double totalPoints = 0.0; // Use double for calculation, convert to int at the end
+
+            try
+            {
+                using (var connection = await OpenConnectionAsync())
+                {
+                    await CreatePlayerRecordsTableAsync(connection);
+
+                    string? selectQuery;
+                    DbCommand? selectCommand;
+                    switch (dbType)
+                    {
+                        case DatabaseType.MySQL:
+                            selectQuery = @"
+                        WITH RankedRecords AS (
+                            SELECT
+                                TimerTicks,
+                                MapName,
+                                SteamID,
+                                ROW_NUMBER() OVER(
+                                    PARTITION BY MapName 
+                                    ORDER BY TimerTicks ASC
+                                ) AS rn
+                            FROM
+                                PlayerRecords
+                            WHERE
+                                Style = @Style
+                        )
+                        SELECT
+                            MapName,
+                            SteamID,
+                            rn
+                        FROM
+                            RankedRecords;
+                        ";
+                            selectCommand = new MySqlCommand(selectQuery, (MySqlConnection)connection);
+                            break;
+                        default:
+                            Utils.LogError("Unsupported database type for dynamic points.");
+                            return 0;
+                    }
+
+                    var allRecords = new List<MapRecord>();
+                    using (selectCommand)
+                    {
+                        selectCommand!.AddParameterWithValue("@Style", style);
+
+                        var row = await selectCommand!.ExecuteReaderAsync();
+
+                        // 1. Read ALL rows into a list
+                        while (await row.ReadAsync())
+                        {
+                            allRecords.Add(new MapRecord
+                            {
+                                MapName = row.GetString("MapName"),
+                                SteamID = row.GetString("SteamID"),
+                                Rank = row.GetInt32("rn")
+                            });
+                        }
+                    }
+
+                    // 2. Group the records by MapName
+                    var groupedByMap = allRecords.GroupBy(r => r.MapName);
+
+                    // 3. Process each map group
+                    foreach (var mapGroup in groupedByMap)
+                    {
+                        string mapName = mapGroup.Key;
+
+                        // Find our target player's record within this map group
+                        var playerRecord = mapGroup.FirstOrDefault(r => r.SteamID == steamId);
+
+                        // If playerRecord is null, the player hasn't completed this map.
+                        // If it's not null, they get points.
+                        if (playerRecord != null)
+                        {
+                            bool isBonus = mapName.Contains("bonus");
+                            int playerRank = playerRecord.Rank;
+
+                            if (isBonus)
+                            {
+                                // --- Bonus Map Logic ---
+                                totalPoints += bonusCompletionFlat;
+                                if (playerRank == 1)
+                                {
+                                    totalPoints += bonusTop10_1_flat;
+                                }
+                            }
+                            else
+                            {
+                                // --- Regular Map Logic ---
+                                // 1. Award completion points
+                                totalPoints += await CalculateTierFlat(mapName);
+
+                                // 2. Award Top 10 points
+                                if (playerRank <= 10)
+                                {
+                                    totalPoints += CalculateTop10Flat(playerRank);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Server.NextFrame(() => Utils.LogError($"Error calculating player points for {playerName}: {ex}"));
+            }
+
+            return (int)Math.Round(totalPoints);
         }
 
         public async Task<int> CalculatePlayerPoints(string steamId, string playerName, int timerTicks, int oldTicks,
@@ -2368,6 +2491,176 @@ namespace SharpTimer
                     {
                         Server.NextFrame(() =>
                             Utils.LogError($"An error occurred in PrintTop10PlayerPoints inside using con: {ex}"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Server.NextFrame(() => Utils.LogError($"An error occurred in PrintTop10PlayerPoints: {ex}"));
+            }
+        }
+
+        public async Task PrintTop10PlayerPointsFlat(CCSPlayerController player, int style = 0)
+        {
+            try
+            {
+                // Dictionaries to hold all data
+                var playerScores = new Dictionary<string, double>(); // Key: SteamID, Value: Points
+                var playerNames = new Dictionary<string, string>();  // Key: SteamID, Value: PlayerName
+                var allRecords = new List<MapRecord>();
+                var mapTierCache = new Dictionary<string, double>(); // Key: MapName, Value: Tier Score
+
+                using (var connection = await OpenConnectionAsync())
+                {
+                    // -----------------------------------------------------------------
+                    // STEP 1: Fetch all players and initialize their scores to 0
+                    // -----------------------------------------------------------------
+                    string playerQuery;
+                    DbCommand? playerCommand;
+
+                    switch (dbType)
+                    {
+                        case DatabaseType.MySQL:
+                            playerQuery = $"SELECT PlayerName, SteamID FROM {PlayerStatsTable}";
+                            playerCommand = new MySqlCommand(playerQuery, (MySqlConnection)connection);
+                            break;
+                        default:
+                            Utils.LogError("Unsupported DB type in PrintTop10.");
+                            return;
+                    }
+
+                    using (playerCommand)
+                    using (var reader = await playerCommand.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            string steamId = reader["SteamID"].ToString()!;
+                            string playerName = reader["PlayerName"].ToString()!;
+                            if (!playerScores.ContainsKey(steamId))
+                            {
+                                playerScores[steamId] = 0.0;
+                                playerNames[steamId] = playerName;
+                            }
+                        }
+                    }
+
+                    // -----------------------------------------------------------------
+                    // STEP 2: Fetch ALL ranked map records for the style/mode
+                    // -----------------------------------------------------------------
+                    string recordsQuery;
+                    DbCommand? recordsCommand;
+
+                    switch (dbType)
+                    {
+                        case DatabaseType.MySQL:
+                            recordsQuery = @"
+                        WITH RankedRecords AS (
+                            SELECT MapName, SteamID,
+                                ROW_NUMBER() OVER(PARTITION BY MapName ORDER BY TimerTicks ASC) AS rn
+                            FROM PlayerRecords
+                            WHERE Style = @Style
+                        )
+                        SELECT MapName, SteamID, rn FROM RankedRecords;";
+                            recordsCommand = new MySqlCommand(recordsQuery, (MySqlConnection)connection);
+                            break;
+                        default:
+                            return; // Already logged error
+                    }
+
+                    using (recordsCommand)
+                    {
+                        recordsCommand.AddParameterWithValue("@Style", style);
+                        using (var reader = await recordsCommand.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                allRecords.Add(new MapRecord
+                                {
+                                    MapName = reader.GetString("MapName"),
+                                    SteamID = reader.GetString("SteamID"),
+                                    Rank = reader.GetInt32("rn")
+                                });
+                            }
+                        }
+                    }
+
+                    // -----------------------------------------------------------------
+                    // STEP 3: Cache Map Tiers (The efficient part)
+                    // -----------------------------------------------------------------
+                    var uniqueMapNames = allRecords.Select(r => r.MapName).Distinct();
+                    foreach (var mapName in uniqueMapNames)
+                    {
+                        if (mapName.Contains("bonus")) continue; // Bonus maps don't use tier score
+                        if (!mapTierCache.ContainsKey(mapName))
+                        {
+                            mapTierCache[mapName] = await CalculateTierFlat(mapName);
+                        }
+                    }
+
+                    // -----------------------------------------------------------------
+                    // STEP 4: Calculate points for all players
+                    // -----------------------------------------------------------------
+                    var groupedByMap = allRecords.GroupBy(r => r.MapName);
+
+                    foreach (var mapGroup in groupedByMap)
+                    {
+                        string mapName = mapGroup.Key;
+                        bool isBonus = mapName.Contains("bonus");
+
+                        // Loop through each player record in this map group
+                        foreach (var record in mapGroup)
+                        {
+                            // Check if this player is in our stats table
+                            if (playerScores.ContainsKey(record.SteamID))
+                            {
+                                if (isBonus)
+                                {
+                                    playerScores[record.SteamID] += bonusCompletionFlat;
+                                    if (record.Rank == 1)
+                                    {
+                                        playerScores[record.SteamID] += bonusTop10_1_flat;
+                                    }
+                                }
+                                else
+                                {
+                                    // Award completion points from our cache
+                                    playerScores[record.SteamID] += mapTierCache[mapName];
+
+                                    // Award Top 10 points
+                                    if (record.Rank <= 10)
+                                    {
+                                        playerScores[record.SteamID] += CalculateTop10Flat(record.Rank);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // -----------------------------------------------------------------
+                    // STEP 5: Sort, Rank, and Print
+                    // -----------------------------------------------------------------
+                    var sortedPlayers = playerScores.OrderByDescending(kvp => kvp.Value)
+                                                    .Take(10); // Only take the Top 10
+
+                    Server.NextFrame(() =>
+                    {
+                        if (IsPlayerOrSpectator(player))
+                            Utils.PrintToChat(player, Localizer["top_10_points"]);
+                    });
+
+                    int rank = 1;
+                    foreach (var entry in sortedPlayers)
+                    {
+                        string name = playerNames[entry.Key];
+                        int points = (int)Math.Round(entry.Value);
+                        int currentRank = rank++; // Use a local variable for the lambda
+
+                        Server.NextFrame(() =>
+                        {
+                            if (IsPlayerOrSpectator(player))
+                                Utils.PrintToChat(player,
+                                    Localizer["top_10_points_list", currentRank, name, points]);
+                        });
                     }
                 }
             }

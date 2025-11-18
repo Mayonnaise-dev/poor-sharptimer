@@ -49,7 +49,7 @@ namespace SharpTimer
         private int movementServices;
         private int movementPtr;
         private readonly CSPlayerState[] _oldPlayerState = new CSPlayerState[65];
-        
+
         public const int REPLAY_VERSION = 1;
 
         public Dictionary<int, PlayerTimerInfo> playerTimers = [];
@@ -103,7 +103,7 @@ namespace SharpTimer
         public int cpTriggerCount;
         private bool useCheckpointTriggers = false;
         public bool useCheckpointVerification = true;
-        
+
         public bool applyInfiniteAmmo = true;
         public bool printStartSpeedEnabled = true;
         public bool useAnticheat = false;
@@ -168,7 +168,7 @@ namespace SharpTimer
 
         // Points settings
         public int baselineT1 = 25;
-        public int baselineT2 =  50;
+        public int baselineT2 = 50;
         public int baselineT3 = 100;
         public int baselineT4 = 200;
         public int baselineT5 = 400;
@@ -189,6 +189,23 @@ namespace SharpTimer
         public double top10_8 = 0.5;
         public double top10_9 = 0.45;
         public double top10_10 = 0.4;
+
+        // Top 10 flat points
+        public double top10_1_flat = 1500;
+        public double top10_2_flat = 1184;
+        public double top10_3_flat = 935;
+        public double top10_4_flat = 738;
+        public double top10_5_flat = 583;
+        public double top10_6_flat = 460;
+        public double top10_7_flat = 363;
+        public double top10_8_flat = 287;
+        public double top10_9_flat = 226;
+        public double top10_10_flat = 165;
+
+        // Bonus points plat
+
+        public double bonusTop10_1_flat = 75;
+        public double bonusCompletionFlat = 25;
 
         // Groups
         public double group1 = 3.125;
@@ -278,7 +295,7 @@ namespace SharpTimer
         public int afkSeconds = 60;
         public int globalCacheInterval = 120;
         public int recordCacheInterval = 60;
-        
+
         public double lowgravPointModifier = 0.8;
         public double sidewaysPointModifier = 1.3;
         public double halfSidewaysPointModifier = 1.3;

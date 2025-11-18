@@ -516,6 +516,210 @@ namespace SharpTimer
             }
         }
 
+        [ConsoleCommand("sharptimer_global_rank_top10_1_flat", "Points awarded for P1")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerGlobalRanksTop101FlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                top10_1_flat = reward;
+                Utils.LogDebug($"SharpTimer top10_1_flat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid top10_1_flat reward. Please provide a positive double.");
+            }
+        }
+
+        [ConsoleCommand("sharptimer_global_rank_top10_2_flat", "Points awarded for P2")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerGlobalRanksTop102FlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                top10_2_flat = reward;
+                Utils.LogDebug($"SharpTimer top10_2_flat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid top10_2_flat reward. Please provide a positive double.");
+            }
+        }
+
+        [ConsoleCommand("sharptimer_global_rank_top10_3_flat", "Points awarded for P3")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerGlobalRanksTop103FlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                top10_3_flat = reward;
+                Utils.LogDebug($"SharpTimer top10_3_flat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid top10_3_flat reward. Please provide a positive double.");
+            }
+        }
+
+        [ConsoleCommand("sharptimer_global_rank_top10_4_flat", "Points awarded for P4")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerGlobalRanksTop104FlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                top10_4_flat = reward;
+                Utils.LogDebug($"SharpTimer top10_4_flat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid top10_4_flat reward. Please provide a positive double.");
+            }
+        }
+
+        [ConsoleCommand("sharptimer_global_rank_top10_5_flat", "Points awarded for P5")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerGlobalRanksTop105FlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                top10_5_flat = reward;
+                Utils.LogDebug($"SharpTimer top10_5_flat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid top10_5_flat reward. Please provide a positive double.");
+            }
+        }
+
+        [ConsoleCommand("sharptimer_global_rank_top10_6_flat", "Points awarded for P6")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerGlobalRanksTop106FlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                top10_6_flat = reward;
+                Utils.LogDebug($"SharpTimer top10_6_flat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid top10_6_flat reward. Please provide a positive double.");
+            }
+        }
+
+        [ConsoleCommand("sharptimer_global_rank_top10_7_flat", "Points awarded for P7")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerGlobalRanksTop107FlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                top10_7_flat = reward;
+                Utils.LogDebug($"SharpTimer top10_7_flat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid top10_7_flat reward. Please provide a positive double.");
+            }
+        }
+
+        [ConsoleCommand("sharptimer_global_rank_top10_8_flat", "Points awarded for P8")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerGlobalRanksTop108FlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                top10_8_flat = reward;
+                Utils.LogDebug($"SharpTimer top10_8_flat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid top10_8_flat reward. Please provide a positive double.");
+            }
+        }
+
+        [ConsoleCommand("sharptimer_global_rank_top10_9_flat", "Points awarded for P9")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerGlobalRanksTop109FlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                top10_9_flat = reward;
+                Utils.LogDebug($"SharpTimer top10_9_flat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid top10_9_flat reward. Please provide a positive double.");
+            }
+        }
+
+        [ConsoleCommand("sharptimer_global_rank_top10_10_flat", "Points awarded for P10")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerGlobalRanksTop1010FlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                top10_10_flat = reward;
+                Utils.LogDebug($"SharpTimer top10_10_flat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid top10_10_flat reward. Please provide a positive double.");
+            }
+        }
+
+        [ConsoleCommand("sharptimer_bonusTop10_1_flat", "Points awarded for P1 on a bonus")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerBonusTop101FlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                bonusTop10_1_flat = reward;
+                Utils.LogDebug($"SharpTimer bonusTop10_1_flat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid bonusTop10_1_flat reward. Please provide a positive double.");
+            }
+        }
+
+        [ConsoleCommand("sharptimer_bonusCompletionFlat", "Points awarded for comping a bonus")]
+        [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
+        public void SharpTimerBonusCompletionFlatConvar(CCSPlayerController? player, CommandInfo command)
+        {
+            string args = command.ArgString;
+
+            if (double.TryParse(args, NumberStyles.Any, CultureInfo.InvariantCulture, out double reward) && reward is >= 0)
+            {
+                bonusCompletionFlat = reward;
+                Utils.LogDebug($"SharpTimer bonusCompletionFlat reward set to {reward}");
+            }
+            else
+            {
+                Utils.LogError("Invalid bonusCompletionFlat reward. Please provide a positive double.");
+            }
+        }
+
         [ConsoleCommand("sharptimer_global_rank_group1_percentile", "The top % of record holders in group #1. Default value: 3.125")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerGlobalRanksGroup1Convar(CCSPlayerController? player, CommandInfo command)
@@ -609,7 +813,7 @@ namespace SharpTimer
 
             enableReplays = bool.TryParse(args, out bool enableReplaysValue) ? enableReplaysValue : args != "0" && enableReplays;
         }
-        
+
         [ConsoleCommand("sharptimer_replay_only_sr", "Only saves SR replay if true. Default value: false")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerReplaySRConvar(CCSPlayerController? player, CommandInfo command)
@@ -659,7 +863,7 @@ namespace SharpTimer
 
             replayBotName = $"{args}";
         }
-        
+
         [ConsoleCommand("sharptimer_replays_use_binary", "Save replays as binary files instead of json. Default value: true")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerReplaysUseBinary(CCSPlayerController? player, CommandInfo command)
@@ -700,7 +904,7 @@ namespace SharpTimer
                 Utils.LogError("Invalid global cache refresh interval value. Please provide a positive value.");
             }
         }
-        
+
         [ConsoleCommand("sharptimer_record_cache_interval", "Total timespan in which records will be cached. Default value : 60")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerRecordCacheConvar(CCSPlayerController? player, CommandInfo command)
@@ -891,7 +1095,7 @@ namespace SharpTimer
 
             apiKey = $"{args}";
         }
-        
+
         [ConsoleCommand("sharptimer_default_mode", "Set default mode for all players on connect")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerDefaultModeConvar(CCSPlayerController? player, CommandInfo command)
@@ -908,7 +1112,7 @@ namespace SharpTimer
                 Utils.LogError($"Invalid mode: {args}");
             }
         }
-        
+
         [ConsoleCommand("sharptimer_enable_standard_mode", "Enable or disable standard mode. Default value: true")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerEnableStandardModeConvar(CCSPlayerController? player, CommandInfo command)
@@ -918,7 +1122,7 @@ namespace SharpTimer
             if (!(bool.TryParse(args, out bool value) ? value : args != "0"))
                 ModeManager.DisableMode(Mode.Standard);
         }
-        
+
         [ConsoleCommand("sharptimer_enable_85t_mode", "Enable or disable 85t mode. Default value: true")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerEnable85tModeConvar(CCSPlayerController? player, CommandInfo command)
@@ -928,7 +1132,7 @@ namespace SharpTimer
             if (!(bool.TryParse(args, out bool value) ? value : args != "0"))
                 ModeManager.DisableMode(Mode._85t);
         }
-        
+
         [ConsoleCommand("sharptimer_enable_102t_mode", "Enable or disable 102t mode. Default value: true")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerEnable102tModeConvar(CCSPlayerController? player, CommandInfo command)
@@ -938,7 +1142,7 @@ namespace SharpTimer
             if (!(bool.TryParse(args, out bool value) ? value : args != "0"))
                 ModeManager.DisableMode(Mode._102t);
         }
-        
+
         [ConsoleCommand("sharptimer_enable_128t_mode", "Enable or disable 128t mode. Default value: true")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerEnable128tModeConvar(CCSPlayerController? player, CommandInfo command)
@@ -948,7 +1152,7 @@ namespace SharpTimer
             if (!(bool.TryParse(args, out bool value) ? value : args != "0"))
                 ModeManager.DisableMode(Mode._128t);
         }
-        
+
         [ConsoleCommand("sharptimer_enable_source_mode", "Enable or disable source mode. Default value: true")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerEnableSourceModeConvar(CCSPlayerController? player, CommandInfo command)
@@ -958,7 +1162,7 @@ namespace SharpTimer
             if (!(bool.TryParse(args, out bool value) ? value : args != "0"))
                 ModeManager.DisableMode(Mode.Source);
         }
-        
+
         [ConsoleCommand("sharptimer_enable_bhop_mode", "Enable or disable bhop mode. Default value: true")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerEnableBhopModeConvar(CCSPlayerController? player, CommandInfo command)
@@ -968,7 +1172,7 @@ namespace SharpTimer
             if (!(bool.TryParse(args, out bool value) ? value : args != "0"))
                 ModeManager.DisableMode(Mode.Bhop);
         }
-        
+
         [ConsoleCommand("sharptimer_enable_custom_mode", "Enable or disable custom mode. Default value: true")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerEnableCustomModeConvar(CCSPlayerController? player, CommandInfo command)
@@ -978,7 +1182,7 @@ namespace SharpTimer
             if (!(bool.TryParse(args, out bool value) ? value : args != "0"))
                 ModeManager.DisableMode(Mode.Custom);
         }
-        
+
         [ConsoleCommand("sharptimer_mode_multiplier_standard", "Point modifier for standard mode. Default value: 1")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerStandardModeMultiplierConvar(CCSPlayerController? player, CommandInfo command)
@@ -995,7 +1199,7 @@ namespace SharpTimer
                 Utils.LogError("Invalid standard mode point modifier. Please provide a positive integer.");
             }
         }
-        
+
         [ConsoleCommand("sharptimer_mode_multiplier_85t", "Point modifier for 85t mode. Default value: 0.9")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimer85tModeMultiplierConvar(CCSPlayerController? player, CommandInfo command)
@@ -1012,7 +1216,7 @@ namespace SharpTimer
                 Utils.LogError("Invalid 85t mode point modifier. Please provide a positive integer.");
             }
         }
-        
+
         [ConsoleCommand("sharptimer_mode_multiplier_102t", "Point modifier for 102t mode. Default value: 0.85")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerArcadeModeMultiplierConvar(CCSPlayerController? player, CommandInfo command)
@@ -1029,7 +1233,7 @@ namespace SharpTimer
                 Utils.LogError("Invalid 102t mode point modifier. Please provide a positive integer.");
             }
         }
-        
+
         [ConsoleCommand("sharptimer_mode_multiplier_128t", "Point modifier for 128t mode. Default value: 0.8")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimer128tModeMultiplierConvar(CCSPlayerController? player, CommandInfo command)
@@ -1046,7 +1250,7 @@ namespace SharpTimer
                 Utils.LogError("Invalid 128t mode point modifier. Please provide a positive integer.");
             }
         }
-        
+
         [ConsoleCommand("sharptimer_mode_multiplier_source", "Point modifier for source mode. Default value: 1.1")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerSourceModeMultiplierConvar(CCSPlayerController? player, CommandInfo command)
@@ -1079,7 +1283,7 @@ namespace SharpTimer
                 Utils.LogError("Invalid bhop mode point modifier. Please provide a positive integer.");
             }
         }
-        
+
         [ConsoleCommand("sharptimer_mode_custom_aa", "Custom airaccelerate float. Default value: 150")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerCustomAirAccelConvar(CCSPlayerController? player, CommandInfo command)
@@ -1112,7 +1316,7 @@ namespace SharpTimer
                 Utils.LogError("Invalid custom accel. Please provide a positive integer.");
             }
         }
-        
+
         [ConsoleCommand("sharptimer_mode_custom_wishspeed", "Custom wishspeed float. Default value: 30")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerCustomWishspeedConvar(CCSPlayerController? player, CommandInfo command)
@@ -1129,7 +1333,7 @@ namespace SharpTimer
                 Utils.LogError("Invalid custom wishspeed. Please provide a positive integer.");
             }
         }
-        
+
         [ConsoleCommand("sharptimer_mode_custom_friction", "Custom friction float. Default value: 5.2")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerCustomFrictionConvar(CCSPlayerController? player, CommandInfo command)
@@ -1155,7 +1359,7 @@ namespace SharpTimer
 
             useCheckpointVerification = bool.TryParse(args, out bool value) ? value : args != "0" && useCheckpointVerification;
         }
-        
+
         [ConsoleCommand("sharptimer_apply_infinite_ammo", "Enable or disable infinite ammo. Default value: true")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerInfiniteAmmoConvar(CCSPlayerController? player, CommandInfo command)
@@ -1420,7 +1624,7 @@ namespace SharpTimer
 
             resetTriggerTeleportSpeedEnabled = bool.TryParse(args, out bool resetTriggerTeleportSpeedEnabledValue) ? resetTriggerTeleportSpeedEnabledValue : args != "0" && resetTriggerTeleportSpeedEnabled;
         }
-        
+
         [ConsoleCommand("sharptimer_startzone_single_jump", "When true, players are only allowed to jump once in the startzone. Default value: false")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerStartzoneSingleJumpBoolConvar(CCSPlayerController? player, CommandInfo command)
@@ -1830,7 +2034,7 @@ namespace SharpTimer
 
             enableNoclip = bool.TryParse(args, out bool enableNoclipValue) ? enableNoclipValue : args != "0" && enableNoclip;
         }
-        
+
         [ConsoleCommand("sharptimer_rs_enabled_onlinear", "Whether !rs will reset players on linear maps. Default value : false")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerResetLinearMapsConvar(CCSPlayerController? player, CommandInfo command)
@@ -1846,7 +2050,7 @@ namespace SharpTimer
         {
             string args = command.ArgString;
 
-            if(!isLinux)
+            if (!isLinux)
             {
                 enableStyles = false;
                 return;
@@ -1863,7 +2067,7 @@ namespace SharpTimer
 
             enableStylePoints = bool.TryParse(args, out bool enableStylePointsValue) ? enableStylePointsValue : args != "0" && enableStylePoints;
         }
-        
+
         [ConsoleCommand("sharptimer_style_multiplier_parachute", "Point modifier for parachute. Default value: 0.8")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerParachuteMultiplierConvar(CCSPlayerController? player, CommandInfo command)
@@ -1880,7 +2084,7 @@ namespace SharpTimer
                 Utils.LogError("Invalid parachute point modifier. Please provide a positive integer.");
             }
         }
-        
+
         [ConsoleCommand("sharptimer_style_multiplier_tas", "Point modifier for TAS. Default value: 0.0")]
         [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
         public void SharpTimerTASMultiplierConvar(CCSPlayerController? player, CommandInfo command)

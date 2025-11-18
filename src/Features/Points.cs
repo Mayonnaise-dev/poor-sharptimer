@@ -34,13 +34,13 @@ namespace SharpTimer
             int maxWR;
             int? tier;
             string? _;
-            
-            if(disableRemoteData)
+
+            if (disableRemoteData)
                 (tier, _) = await Utils.FindMapInfoFromLocal(Utils.GetMapInfoSource(), mapname);
-                
+
             else
                 (tier, _) = await Utils.FindMapInfoFromHTTP(Utils.GetMapInfoSource(), mapname);
-                
+
             if (tier != null)
             {
                 maxWR = maxRecordPointsBase * (int)tier;             // Get tier from remote_data by default
@@ -70,22 +70,70 @@ namespace SharpTimer
             };
         }
 
+        public async Task<double> CalculateTierFlat(string mapname)
+        {
+            int? tier;
+            string? _;
+
+            if (disableRemoteData)
+                (tier, _) = await Utils.FindMapInfoFromLocal(Utils.GetMapInfoSource(), mapname);
+
+            else
+                (tier, _) = await Utils.FindMapInfoFromHTTP(Utils.GetMapInfoSource(), mapname);
+
+            if (tier == null)
+            {
+                tier = 1;                                           // If nothing exists, tier = 1
+            }
+
+            return tier switch
+            {
+                1 => baselineT1,
+                2 => baselineT2,
+                3 => baselineT3,
+                4 => baselineT4,
+                5 => baselineT5,
+                6 => baselineT6,
+                7 => baselineT7,
+                8 => baselineT8,
+                _ => 0,
+            };
+        }
+
+        public double CalculateTop10Flat(int position)
+        {
+            return position switch
+            {
+                1 => top10_1_flat,
+                2 => top10_2_flat,
+                3 => top10_3_flat,
+                4 => top10_4_flat,
+                5 => top10_5_flat,
+                6 => top10_6_flat,
+                7 => top10_7_flat,
+                8 => top10_8_flat,
+                9 => top10_9_flat,
+                10 => top10_10_flat,
+                _ => 0,
+            };
+        }
+
         // Step 3
         // This function takes the WR points from above and distributes them among the top 10
         public double CalculateTop10(double points, int position, bool forGlobal = false)
         {
             return position switch
             {
-                1  => points * (forGlobal ? 1.0   : top10_1),
-                2  => points * (forGlobal ? 0.8   : top10_2),
-                3  => points * (forGlobal ? 0.75  : top10_3),
-                4  => points * (forGlobal ? 0.7   : top10_4),
-                5  => points * (forGlobal ? 0.65  : top10_5),
-                6  => points * (forGlobal ? 0.6   : top10_6),
-                7  => points * (forGlobal ? 0.55  : top10_7),
-                8  => points * (forGlobal ? 0.5   : top10_8),
-                9  => points * (forGlobal ? 0.45  : top10_9),
-                10 => points * (forGlobal ? 0.4   : top10_10),
+                1 => points * (forGlobal ? 1.0 : top10_1),
+                2 => points * (forGlobal ? 0.8 : top10_2),
+                3 => points * (forGlobal ? 0.75 : top10_3),
+                4 => points * (forGlobal ? 0.7 : top10_4),
+                5 => points * (forGlobal ? 0.65 : top10_5),
+                6 => points * (forGlobal ? 0.6 : top10_6),
+                7 => points * (forGlobal ? 0.55 : top10_7),
+                8 => points * (forGlobal ? 0.5 : top10_8),
+                9 => points * (forGlobal ? 0.45 : top10_9),
+                10 => points * (forGlobal ? 0.4 : top10_10),
                 _ => 0,
             };
         }
@@ -97,7 +145,7 @@ namespace SharpTimer
         {
             double baseMultiplier = points * 0.25;
             double divisor = 1.5;
-            
+
             double threshold1, threshold2, threshold3, threshold4, threshold5;
             if (forGlobal)
             {
