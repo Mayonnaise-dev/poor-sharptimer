@@ -91,7 +91,7 @@ namespace SharpTimer
                 activeWeapon ??= "no_knife";
                 if (!weaponSpeedLookup.TryGetValue(activeWeapon, out WeaponSpeedStats weaponStats) || !player.IsValid) return;
 
-                if(player.PlayerPawn.Value!.ActualMoveType.HasFlag(MoveType_t.MOVETYPE_LADDER))
+                if (player.PlayerPawn.Value!.ActualMoveType.HasFlag(MoveType_t.MOVETYPE_LADDER))
                     player.PlayerPawn.Value!.VelocityModifier = 1.0f;
                 else
                     player.PlayerPawn.Value!.VelocityModifier = (float)(forcedPlayerSpeed / weaponStats.GetSpeed(player.PlayerPawn.Value.IsWalking));
@@ -208,7 +208,7 @@ namespace SharpTimer
             }
             Utils.PrintToSpec(player, $"{Localizer["start_speed"]} {ChatColors.Olive}{printSpeed}");
         }
-      
+
         private void RemovePlayerCollision(CCSPlayerController? player)
         {
             if (player == null) return;
@@ -301,7 +301,7 @@ namespace SharpTimer
                     cachedSortedRecords = SortedCachedStandardRecords;
                     break;
             }
-            
+
             foreach (var kvp in cachedSortedRecords!.Take(100))
             {
                 int recordTimerTicks = kvp.Value.TimerTicks;
@@ -364,12 +364,12 @@ namespace SharpTimer
                     currentMapNamee = bonusX == 0 ? mapname! : $"{mapname}_bonus{bonusX}";
 
                 int savedPlayerTime = await GetPreviousPlayerRecordFromDatabase(steamId, currentMapNamee!, playerName, bonusX, style, mode);
-                
+
                 if (savedPlayerTime == 0)
                     savedPlayerTime = timerTicks;
 
                 Dictionary<int, PlayerRecord> sortedRecords;
-                
+
                 sortedRecords = await GetSortedRecordsFromDatabase(0, bonusX, currentMapNamee, style, mode);
 
                 int placement = 1;
@@ -402,14 +402,14 @@ namespace SharpTimer
             try
             {
                 decimal savedPlayerTime;
-                
+
                 savedPlayerTime = await GetPreviousPlayerRecordFromGlobal(playerId, mode, style, bonus);
 
                 if (savedPlayerTime == 0)
                     savedPlayerTime = time;
 
                 Dictionary<int, GlobalRecord> sortedRecords;
-                
+
                 sortedRecords = await GetSortedRecordsFromGlobal(style, mode, bonus);
 
                 int placement = 1;
@@ -462,6 +462,53 @@ namespace SharpTimer
             catch (Exception ex)
             {
                 Utils.LogError($"Error in GetPlayerStagePlacementWithTotal: {ex}");
+                return UnrankedTitle;
+            }
+        }
+
+        public async Task<string> GetPlayerServerPlacementFlat(CCSPlayerController? player, string steamId, string playerName, bool getRankImg = false, bool getPlacementOnly = false, bool getPointsOnly = false)
+        {
+            try
+            {
+                if (!IsPlayerOrSpectator(player))
+                    return "";
+
+                // allRanks is Dictionary<string, (string Name, double Points)>
+                var allRanks = await DynamicPlayerRanksDictionary(player);
+
+                // allRanksSorted is IOrderedEnumerable<KeyValuePair<string, (string Name, double Points)>>
+                var allRanksSorted = allRanks.OrderByDescending(x => x.Value.Points);
+
+                // Find the player's entry in the sorted list
+                var playerEntry = allRanksSorted.FirstOrDefault(x => x.Key == steamId);
+
+                // Check if the player was found (i.e., they have points)
+                if (playerEntry.Key == null)
+                {
+                    return getRankImg ? UnrankedIcon : UnrankedTitle;
+                }
+
+                // --- Fix 1: Find the 1-based index (placement) ---
+                // LINQ to find the index: Take all players ranked higher or equal, and count them.
+                int placement = allRanksSorted.TakeWhile(x => x.Key != steamId).Count() + 1;
+
+                // --- Fix 2: Get total players and calculate percentage ---
+                int totalPlayers = allRanksSorted.Count(x => x.Value.Points > 0);
+
+                if (getPointsOnly)
+                {
+                    // You can use the retrieved playerEntry here
+                    return ((int)Math.Round(playerEntry.Value.Points)).ToString();
+                }
+
+                double percentage = (double)placement / totalPlayers * 100;
+
+                // --- Fix 3: Use the correct variables for the call ---
+                return CalculateRankStuff(totalPlayers, placement, percentage, getRankImg, getPlacementOnly);
+            }
+            catch (Exception ex)
+            {
+                Utils.LogError($"Error in GetPlayerServerPlacement: {ex}");
                 return UnrankedTitle;
             }
         }
@@ -531,7 +578,7 @@ namespace SharpTimer
                 {
                     if (playerTimer.StageTimes != null)
                         playerTimer.StageTimes.Clear();
-            
+
                     if (playerTimer.StageVelos != null)
                         playerTimer.StageVelos.Clear();
                     playerTimer.CurrentMapStage = stageTriggers.GetValueOrDefault(callerHandle, 0);
@@ -541,7 +588,7 @@ namespace SharpTimer
                 {
                     if (playerTimer.StageTimes != null)
                         playerTimer.StageTimes.Clear();
-            
+
                     if (playerTimer.StageVelos != null)
                         playerTimer.StageVelos.Clear();
                     playerTimer.CurrentMapCheckpoint = 0;
@@ -698,10 +745,10 @@ namespace SharpTimer
 
                 Utils.PrintToChatAll(Localizer["timer_time", newTime, timeDifference]);
                 if (enableStyles && playerTimers[player.Slot].currentStyle != 0) Utils.PrintToChatAll(Localizer["timer_style", GetNamedStyle(style)]);
-                if (mode != GetModeName(defaultMode))Utils.PrintToChatAll(Localizer["timer_mode", mode]);
+                if (mode != GetModeName(defaultMode)) Utils.PrintToChatAll(Localizer["timer_mode", mode]);
                 if (enableReplays && enableSRreplayBot && newSR && (oldticks > newticks || oldticks == 0) && mode == GetModeName(defaultMode))
                     _ = Task.Run(async () => await SpawnReplayBot());
-                
+
                 try
                 {
                     StEventSenderCapability.Get()

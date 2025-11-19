@@ -79,13 +79,13 @@ namespace SharpTimer
                             else continue;
                         }
 
-                        if (playerTimer.AFKTicks >= afkSeconds*48 && !playerTimer.AFKWarned && afkWarning)
+                        if (playerTimer.AFKTicks >= afkSeconds * 48 && !playerTimer.AFKWarned && afkWarning)
                         {
                             Utils.PrintToChat(player, $"{Localizer["afk_message"]}");
                             playerTimer.AFKWarned = true;
                         }
-                            
-                        if (playerTimer.AFKTicks >= afkSeconds*64)
+
+                        if (playerTimer.AFKTicks >= afkSeconds * 64)
                             connectedAFKPlayers[player.Slot] = connectedPlayers[player.Slot];
 
                         if (playerSpeed.IsZero())
@@ -114,7 +114,7 @@ namespace SharpTimer
                         // remove jumping in startzone
                         if (!startzoneJumping && playerTimer.inStartzone)
                         {
-                            if((playerButtons & PlayerButtons.Jump) != 0 || playerTimer.MovementService!.OldJumpPressed)
+                            if ((playerButtons & PlayerButtons.Jump) != 0 || playerTimer.MovementService!.OldJumpPressed)
                                 playerPawn.AbsVelocity.Z = 0f;
                         }
 
@@ -123,7 +123,7 @@ namespace SharpTimer
                         {
                             bool wasOnGround = playerTimer.WasOnGroundLastTick;
                             playerTimer.WasOnGroundLastTick = playerPawn.GroundEntity.IsValid;
-                            
+
                             if ((playerTimer.inStartzone || playerTimer.CurrentZoneInfo.InBonusStartZone) && playerTimer.StartZoneJumps >= 1 &&
                                 playerPawn.AbsVelocity.IsZero())
                                 playerTimer.StartZoneJumps = 0;
@@ -184,7 +184,7 @@ namespace SharpTimer
                             playerTimer.changedStyle = false;
                         }
                         /* styles */
-                        
+
                         /* modes */
                         if (playerTimer.ChangedMode)
                         {
@@ -217,8 +217,8 @@ namespace SharpTimer
                             OnSyncTick(player, playerButtons, playerPawn.EyeAngles!);
 
                         // reset in startzone
-                        if (StrafeHudEnabled && playerTimer.inStartzone && playerTimer.Rotation.Count > 0) 
-                        { 
+                        if (StrafeHudEnabled && playerTimer.inStartzone && playerTimer.Rotation.Count > 0)
+                        {
                             playerTimer.Sync = 100.00f;
                             playerTimer.Rotation.Clear();
                         }
@@ -244,7 +244,7 @@ namespace SharpTimer
                         {
                             Utils.LogDebug($"{playerName} CachedMapPlacement is still null, calling rank handler once more");
                             playerTimer.IsRankPbReallyCached = true;
-                            AddTimer(3.0f, () => { _ = Task.Run(async () => await RankCommandHandler(player, steamID, slot, playerName, true, playerTimer.currentStyle, playerTimer.Mode)); });                           
+                            AddTimer(3.0f, () => { _ = Task.Run(async () => await RankCommandHandler(player, steamID, slot, playerName, true, playerTimer.currentStyle, playerTimer.Mode)); });
                         }
                         /* ranks */
 
@@ -309,7 +309,7 @@ namespace SharpTimer
 
                         if (!string.IsNullOrEmpty(hudContent))
                             player.PrintToCenterHtml(hudContent);
-                        
+
                         // idk what this is for
                         playerTimer.MovementService!.OldJumpPressed = false;
                     }
@@ -407,9 +407,9 @@ namespace SharpTimer
                                       infoLine
                                     : "") +
                                 (keyEnabled && !playerTimer.IsReplaying ? keysLineNoHtml : "");
-                                /*((playerTimer.IsTester && !playerTimer.IsReplaying) ? $"{(!keyEnabled ? "<br>" : "")}" + playerTimer.TesterBigGif : "") +
-                                ((playerTimer.IsVip && !playerTimer.IsTester && !playerTimer.IsReplaying) ? $"{(!keyEnabled ? "<br><br>" : "")}" + $"<br><img src='https://files.catbox.moe/{playerTimer.VipBigGif}.gif'><br>" : "") +
-                                ((playerTimer.IsReplaying && playerTimer.VipReplayGif != "x") ? playerTimer.VipReplayGif : "");*/
+            /*((playerTimer.IsTester && !playerTimer.IsReplaying) ? $"{(!keyEnabled ? "<br>" : "")}" + playerTimer.TesterBigGif : "") +
+            ((playerTimer.IsVip && !playerTimer.IsTester && !playerTimer.IsReplaying) ? $"{(!keyEnabled ? "<br><br>" : "")}" + $"<br><img src='https://files.catbox.moe/{playerTimer.VipBigGif}.gif'><br>" : "") +
+            ((playerTimer.IsReplaying && playerTimer.VipReplayGif != "x") ? playerTimer.VipReplayGif : "");*/
 
             return hudContent;
         }
@@ -422,26 +422,25 @@ namespace SharpTimer
                     $"{playerTimer.CachedPB} " +
                     $"[{playerTimer.CachedMapPlacement}] " +
                     $"{(RankIconsEnabled ? $" |</font> <img src='{playerTimer.RankHUDIcon}'><font class='fontSize-s stratum-bold-italic' color='gray'>" : "")}" +
-                    $"{(enableStyles && playerTimer.currentStyle != 0 ? $" | {GetNamedStyle(playerTimer.currentStyle)}" : "")} | {playerTimer.Mode}<br>" +
-                    $"{GetMapDataLine()}" +
+                    $"{(enableStyles && playerTimer.currentStyle != 0 ? $" | {GetNamedStyle(playerTimer.currentStyle)}" : "")} | {GetMapDataLine()}" +
                     $"</font>"
 
                 : $" <font class='fontSize-s stratum-bold-italic' color='gray'>{playerTimer.ReplayHUDString}</font>";
         }
-        
+
         private string GetMapDataLine()
         {
             string mapInfo = "";
-    
+
             if (MapTierHudEnabled && currentMapTier != null)
                 mapInfo += $"Tier: {currentMapTier}";
-    
+
             if (MapTypeHudEnabled && currentMapType != null)
                 mapInfo += (string.IsNullOrEmpty(mapInfo) ? "" : " | ") + currentMapType;
-    
+
             if (MapNameHudEnabled && currentMapType == null && currentMapTier == null)
                 mapInfo += (string.IsNullOrEmpty(mapInfo) ? "" : " | ") + currentMapName;
-    
+
             return mapInfo;
         }
 
