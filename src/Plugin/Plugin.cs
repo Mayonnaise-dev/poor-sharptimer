@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using CounterStrikeSharp.API.Modules.Cvars;
 using Serilog;
+using System.Threading.Tasks;
 
 namespace SharpTimer;
 
@@ -162,11 +163,13 @@ public partial class SharpTimer
         }
     }
 
-    private void LoadMapData(string mapName)
+    private async Task LoadMapData(string mapName)
     {
         try
         {
             Utils.LogDebug($"Loading MapData on RoundStart...");
+
+            replayBotController = null;
 
             currentMapName = mapName;
             totalBonuses = new int[11];
@@ -275,9 +278,11 @@ public partial class SharpTimer
                         Utils.LogError("MapExec Error: file name returned null");
                 }
             }, TimerFlags.STOP_ON_MAPCHANGE);
-            
+
             if (adServerRecordEnabled) ADtimerServerRecord();
             if (adMessagesEnabled) ADtimerMessages();
+
+
 
             if (Utils.PlayersCount() > 0 && enableReplays && enableSRreplayBot && replayBotController == null)
                 Server.NextFrame(() => _ = Task.Run(SpawnReplayBot));
@@ -756,7 +761,7 @@ public partial class SharpTimer
                 Utils.LogDebug($"Running Server Record AD...");
 
                 Dictionary<int, PlayerRecord> cachedSortedRecords = await GetSortedRecordsFromDatabase(1, 0, "", 0, GetModeName(defaultMode));
-                
+
                 if (cachedSortedRecords.Count == 0)
                 {
                     Utils.LogDebug($"No Server Records for this map yet!");

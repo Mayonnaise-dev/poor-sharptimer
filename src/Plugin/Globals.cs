@@ -349,6 +349,7 @@ namespace SharpTimer
         public string? discordSRWebhookUrl;
         public string? discordPBBonusWebhookUrl;
         public string? discordSRBonusWebhookUrl;
+        public string? discordLiveRanksWebhookUrl;
         public string? discordWebhookFooter;
         public int discordWebhookRareGifOdds;
         public string? discordWebhookRareGif;

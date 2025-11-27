@@ -510,6 +510,15 @@ namespace SharpTimer
                 return;
             }
 
+            var (srSteamID, srPlayerName, srTime) = ("null", "null", 0);
+
+
+            if (enableDb)
+                (srSteamID, srPlayerName, srTime) = await GetMapRecordSteamIDFromDatabase(0, 0, 0, GetModeName(defaultMode));
+            else
+                (srSteamID, srPlayerName, srTime) = await GetMapRecordSteamID(0);
+
+
             Server.NextFrame(() =>
             {
                 AddTimer(3.0f, () =>
@@ -544,13 +553,18 @@ namespace SharpTimer
 
                                 // bot settings
                                 bot.RemoveWeapons();
+                                bot.DropActiveWeapon();
+                                bot.DropActiveWeapon();
+                                bot.DropActiveWeapon();
                                 botPlayerPawn.Bot!.IsStopping = true;
                                 botPlayerPawn.Bot.IsSleeping = true;
                                 botPlayerPawn.Bot.AllowActive = true;
 
+                                var displayName = "[WR] " + srPlayerName + " | " + Utils.FormatTime(srTime);
+
                                 // start bot replay
                                 OnPlayerConnect(bot, true);
-                                ChangePlayerName(bot, replayBotName);
+                                ChangePlayerName(bot, displayName);
                                 playerTimers[bot.Slot].IsTimerBlocked = true;
                                 _ = Task.Run(async () =>
                                     await ReplayHandler(bot, bot.Slot, "1", "69", "unknown", 0, 0, false, GetModeName(defaultMode)));
@@ -590,7 +604,7 @@ namespace SharpTimer
                 else
                     (srSteamID, srPlayerName, srTime) = await GetMapRecordSteamID(bonusX);
             }
-            
+
             string ext = useBinaryReplays ? "dat" : "json";
             string fileName = $"{(topSteamID == "x" ? $"{srSteamID}" : $"{topSteamID}")}_replay.{ext}";
             string playerReplaysPath;
