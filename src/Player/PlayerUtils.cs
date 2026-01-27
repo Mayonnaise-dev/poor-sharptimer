@@ -793,7 +793,7 @@ namespace SharpTimer
                     var recordKey = (useStageTriggers || !useCheckpointTriggers)
                         ? "new_stage_server_record"
                         : "new_cp_server_record";
-                    Utils.PrintToChatAll(Localizer[recordKey, playerName]);
+                    Utils.PrintToChatAll(Localizer[recordKey, playerName, stage]);
 
                     PlaySound(player, srSound, stageSoundAll ? true : false);
                     Utils.PrintToChatAll(Localizer["timer_time", newTime, timeDifference]);

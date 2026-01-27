@@ -13,6 +13,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System.Threading.Tasks;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Admin;
@@ -21,7 +22,7 @@ namespace SharpTimer
 {
     public partial class SharpTimer
     {
-        private void OnPlayerConnect(CCSPlayerController? player, bool isForBot = false)
+        private async Task OnPlayerConnect(CCSPlayerController? player, bool isForBot = false)
         {
             try
             {
@@ -103,6 +104,13 @@ namespace SharpTimer
 
                     if (playerTimers.TryGetValue(slot, out var playerTimer) && playerTimer == null)
                         playerTimers.Remove(slot);
+
+                    if (replayBotController == null){
+                         _ = Task.Run(async () =>
+                        {
+                            await SpawnReplayBot();
+                        });
+                    }
                 }
             }
             catch (Exception ex)
@@ -154,6 +162,14 @@ namespace SharpTimer
             catch (Exception ex)
             {
                 Utils.LogError($"Error in OnPlayerDisconnect (probably replay bot related lolxd): {ex.Message}");
+            }
+            finally {
+                var anyHumans = Utilities.GetPlayers()
+                                .Any(p => !p.IsBot); 
+                if (!anyHumans)
+                {
+                    replayBotController = null;
+                }
             }
         }
     }
