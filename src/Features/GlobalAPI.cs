@@ -906,7 +906,10 @@ namespace SharpTimer
         public async Task<bool> CheckKeyAsync()
         {
             if (apiKey == "")
+            {
+                globalDisabled = true;
                 return false;
+            }
 
             try
             {
@@ -921,14 +924,15 @@ namespace SharpTimer
                 {
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+
+                globalDisabled = true;
+                return false;
+                
             }
             catch (Exception ex)
             {
                 Utils.LogError(ex.Message);
+                globalDisabled = true;
                 return false;
             }
         }
@@ -936,7 +940,10 @@ namespace SharpTimer
         public async Task<bool> CheckHashAsync()
         {
             if (apiKey == "")
+            {
+                globalDisabled = true;
                 return false;
+            }
 
             try
             {
@@ -955,21 +962,20 @@ namespace SharpTimer
                 {
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+               
+                globalDisabled = true;
+                return false;
             }
             catch (Exception ex)
             {
                  Utils.LogError(ex.Message);
+                 globalDisabled = true;
                 return false;
             }
         }
 
         public bool CheckCvars()
         {
-            var equal = Utils.IsApproximatelyEqual;
 
             if (startzoneSingleJumpEnabled
                 && useCheckpointVerification
@@ -977,6 +983,7 @@ namespace SharpTimer
             { 
                 return true;
             }
+            globalDisabled = true;
             return false;
         }
 

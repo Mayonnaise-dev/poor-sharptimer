@@ -991,7 +991,7 @@ namespace SharpTimer
 
                             Server.NextFrame(async () =>
                             {
-                                if (globalDisabled)
+                                if (globalDisabled || !playerCache.PlayerID.ContainsKey(slot))
                                     return;
 
                                 DateTimeOffset timeCreated = DateTimeOffset.UtcNow;
@@ -1136,7 +1136,7 @@ namespace SharpTimer
 
                             Server.NextFrame(async () =>
                             {
-                                if (globalDisabled)
+                                if (globalDisabled || !playerCache.PlayerID.ContainsKey(slot))
                                     return;
 
                                 DateTimeOffset timeCreated = DateTimeOffset.UtcNow;
